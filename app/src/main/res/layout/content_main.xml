@@ -93,8 +93,8 @@
                     android:text="@string/option_two"
                     android:textColor="@android:color/white"/>
 
-            <ImageView
-                    android:id="@+id/imgWrongAnswers"
+            <TextView
+                    android:id="@+id/txtWrongAnswers"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center"
@@ -125,8 +125,8 @@
                     android:text="@string/option_four"
                     android:textColor="@android:color/white"/>
 
-            <ImageView
-                    android:id="@+id/imgRightAnswers"
+            <TextView
+                    android:id="@+id/txtRightAnswers"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_gravity="center_horizontal"

@@ -19,18 +19,3 @@ class App: Application(), HasActivityInjector {
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector
 
 }
-
-
-//class LuaApp : Application(), HasActivityInjector {
-//    @Inject
-//    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-//
-//    override fun onCreate() {
-//        super.onCreate()
-//        // initialize Dagger
-//        DaggerAppComponent.builder().application(this).build().inject(this)
-//    }
-//
-//    // this is required to setup Dagger2 for Activity
-//    override fun activityInjector(): AndroidInjector<Activity> = activityInjector
-//}

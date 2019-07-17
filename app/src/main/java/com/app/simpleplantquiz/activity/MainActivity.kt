@@ -18,6 +18,8 @@ import com.app.simpleplantquiz.helpers.helperfun
 import com.app.simpleplantquiz.helpers.helperfun.Companion.checkForInternetConnection
 import com.app.simpleplantquiz.models.ParsePlantUtility
 import com.app.simpleplantquiz.models.Plant
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.example.plantquiz.R
 import dagger.android.AndroidInjection
 
@@ -27,27 +29,6 @@ import java.lang.Exception
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(),MainActivityMVP.View {
-
-//    @BindView(R.id.button1)
-//    lateinit var OptionOne: Button
-//
-//    @BindView(R.id.button2)
-//    lateinit var OptionTwo: Button
-//
-//    @BindView(R.id.button3)
-//    lateinit var OptionThree: Button
-//
-//    @BindView(R.id.button4)
-//    var OptionFour: Button? = null
-//
-//    @BindView(R.id.imgRightAnswers)
-//    lateinit var imgRight: ImageView
-//
-//    @BindView(R.id.imgWrongAnswers)
-//    lateinit var imgWrong: ImageView
-//
-//    @BindView(R.id.txtState)
-//    lateinit var state: TextView
 
     @Inject
     lateinit var presenter: MainActivityMVP.Presenter
@@ -59,18 +40,18 @@ class MainActivity : AppCompatActivity(),MainActivityMVP.View {
     var correctAnswerIndex: Int = 0
     var correctPlant: Plant? = null
 
-    var numberOfTimesUserAnsweredCorrectly: Int = 0
-    var numberOfTimesUserAnsweredInCorrectly: Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-     //   ButterKnife.bind(this)
-
         setProgressBar(false)
+
+        YoYo.with(Techniques.Pulse)
+            .duration(700)
+            .repeat(5)
+            .playOn(floatingbutton)
 
         btnOpenPhotoGallery.setOnClickListener {
 
@@ -85,6 +66,22 @@ class MainActivity : AppCompatActivity(),MainActivityMVP.View {
             startActivityForResult(cameraIntent, OPEN_CAMERA_BUTTON_REQUEST_ID)
 
 
+        }
+
+        button1.setOnClickListener {
+            presenter.specifyTheRightAndWrongAnswer(0)
+        }
+
+        button2.setOnClickListener {
+            presenter.specifyTheRightAndWrongAnswer(1)
+        }
+
+        button3.setOnClickListener {
+            presenter.specifyTheRightAndWrongAnswer(2)
+        }
+
+        button4.setOnClickListener {
+            presenter.specifyTheRightAndWrongAnswer(3)
         }
 
         floatingbutton.setOnClickListener {
@@ -136,6 +133,16 @@ class MainActivity : AppCompatActivity(),MainActivityMVP.View {
 
     override fun fetchContext(): Context {
         return this
+    }
+
+    override fun getResponse(response: Boolean, number: Int) {
+        if(response){
+            txtState.text = getString(R.string.right_answer)
+            txtRightAnswers.text = ("$number")
+        }else if(!response){
+            txtState.text = getString(R.string.wrong_answer)
+            txtWrongAnswers.text = ("$number")
+        }
     }
 
     fun setProgressBar(show: Boolean) {
@@ -213,8 +220,35 @@ class MainActivity : AppCompatActivity(),MainActivityMVP.View {
 
             setProgressBar(false)
 
+            playAnimationOnView(imgTaken, Techniques.Tada)
+            playAnimationOnView(button1, Techniques.RollIn)
+            playAnimationOnView(button2, Techniques.RollIn)
+            playAnimationOnView(button3, Techniques.RollIn)
+            playAnimationOnView(button4, Techniques.RollIn)
+            playAnimationOnView(txtState, Techniques.Swing)
+            playAnimationOnView(txtWrongAnswers, Techniques.FlipInX)
+            playAnimationOnView(txtRightAnswers, Techniques.Landing)
+
             imgTaken.setImageBitmap(result)
         }
+    }
+
+    // Playing Animations
+    private fun playAnimationOnView(view: View?, technique: Techniques) {
+
+        YoYo.with(technique)
+            .duration(700)
+            .repeat(0)
+            .playOn(view)
+
+    }
+
+    override fun getttingPlant(): Plant? {
+        return correctPlant
+    }
+
+    override fun getNumber(): Int {
+        return correctAnswerIndex
     }
 }
 

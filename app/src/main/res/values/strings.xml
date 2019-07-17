@@ -11,4 +11,6 @@
     <string name="cancel">Cancelar</string>
     <string name="dialog_title">Sin conexion</string>
     <string name="dialog_content">Por favor revise su conexion a internet e intente nuevamente</string>
+    <string name="right_answer">Respuesta Correcta</string>
+    <string name="wrong_answer">Respuesta incorrecta</string>
 </resources>
