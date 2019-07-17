@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="buttons_separation">25dp</dimen>
+    <dimen name="linears_separations">40dp</dimen>
+</resources>
